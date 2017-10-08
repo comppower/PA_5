@@ -7,6 +7,7 @@
 #include "Ant.h"
 
 Ant::Ant(Location initLoc):Organism(initLoc){
+	hasMoved=true;
 	curLoc=initLoc;
 	moveCount=0;
 }
@@ -14,9 +15,11 @@ Ant::Ant(Location initLoc):Organism(initLoc){
 //board, and then sets the curLoc
 //to the location returned
 Location Ant::Move(){
-	return Location {0,0};
+	return curLoc;
 }
-
+void Ant::SetLoc(Location loc){
+	curLoc=loc;
+}
 Location Ant::Reproduce(){
 	return Location{0,0};
 }

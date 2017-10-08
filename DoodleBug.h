@@ -18,10 +18,12 @@ public:
 	bool IsPrey();
 	Location GetLoc();
 	char GetChar();
+	void SetLoc(Location loc);
 	DoodleBug(Location initLoc);
 	~DoodleBug();
 private:
 	const int toStarve=3;
+	int turnsSinceEating;
 };
 
 

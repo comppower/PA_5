@@ -13,6 +13,8 @@ struct Location{
 	int c;
 };
 
+typedef struct Location Location;
+
 class Organism{
 public:
 	//this says the organism needs to know
@@ -24,6 +26,9 @@ public:
 	//this is used to determine if there is
 	//a bug there
 	virtual Location GetLoc()=0;
+	virtual void SetLoc(Location loc)=0;
+	//this stores whether or not the organism has moved
+	bool hasMoved;
 	virtual ~Organism(){;}
 protected:
 	//the constructor is protected becuase
@@ -31,8 +36,6 @@ protected:
 	//of this type
 	Organism(Location initLoc){;}
 	int moveCount;
-	//this stores whether or not the organism has moved
-	bool hasMoved;
 	//this stores the position
 	//of the organism, to be used to find
 	//position

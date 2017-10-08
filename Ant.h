@@ -17,6 +17,7 @@ public:
 	bool IsPrey();
 	Location GetLoc();
 	char GetChar();
+	void SetLoc(Location loc);
 	Ant(Location initLoc);
 	~Ant();
 private:
