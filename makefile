@@ -36,7 +36,7 @@ Organism.o: Organism.h Organism.cpp
 	g++ $(CFLAGS) -Wall -c Organism.cpp
 
 clean:
-	rm -f *.o Sim
+	rm -rf *.o Sim
 	rm -rf ./latex ./html
 
 docs:
