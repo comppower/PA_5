@@ -1,16 +1,15 @@
 /*
-[xSize]; * DoodleBug.h
+ * EmptyBug.h
  *
  *  Created on: Oct 8, 2017
  *      Author: klibby
  */
 
-#ifndef DOODLEBUG_H_
-#define DOODLEBUG_H_
+#ifndef EMPTYBUG_H_
+#define EMPTYBUG_H_
 #include "Organism.h"
-#include "EmptyBug.h"
 
-class DoodleBug: public EmptyBug{
+class EmptyBug: public Organism{
 public:
 	//all of these override the vitrual members
 	//from Organism
@@ -18,12 +17,13 @@ public:
 	Location Reproduce();
 	bool IsPrey();
 	bool IsEmpty();
-	DoodleBug(Location initLoc);
-	~DoodleBug();
+	EmptyBug();
+	virtual ~EmptyBug();
 private:
-	const int toStarve=3;
+
 };
 
 
 
-#endif /* DOODLEBUG_H_ */
+
+#endif /* EMPTYBUG_H_ */

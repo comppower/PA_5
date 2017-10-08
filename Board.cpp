@@ -7,16 +7,22 @@
 
 #include "Board.h"
 #include "DoodleBug.h"
+#include "EmptyBug.h"
 #include <stdlib.h>
 
-DoodleBug ***Board::curBoard=NULL;
-DoodleBug ***Board::nextBoard=NULL;
+EmptyBug ***Board::curBoard=NULL;
+EmptyBug ***Board::nextBoard=NULL;
 int Board::turn=0;
 
 void Board::Init(int ants, int doodleBugs, int xSize, int ySize){
 //TODO create an "empty organism" so we can make a pointer to it for the array
-	curBoard= new DoodleBug**[ySize];
+	curBoard= new EmptyBug**[ySize];
 	for(int i=0; i<ySize; i++){
-		curBoard[i]=new DoodleBug*[xSize];
+		curBoard[i]=new EmptyBug*[xSize];
+	}
+	for(int i=0; i<ySize; i++){
+		for(int j=0; j<xSize; j++){
+			curBoard[i][j]=new EmptyBug();
+		}
 	}
 }

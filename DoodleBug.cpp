@@ -6,8 +6,9 @@
  */
 
 #include "DoodleBug.h"
+#include "EmptyBug.h"
 
-DoodleBug::DoodleBug(Location initLoc):Organism(initLoc){
+DoodleBug::DoodleBug(Location initLoc):EmptyBug(){
 	curLoc=initLoc;
 	moveCount=0;
 }
@@ -19,7 +20,9 @@ Location DoodleBug::Move(){
 Location DoodleBug::Reproduce(){
 	return Location{0,0};
 }
-
+bool DoodleBug::IsEmpty(){
+	return false;
+}
 bool DoodleBug::IsPrey(){
 	return false;
 }

@@ -26,12 +26,15 @@ Sim.o: Board.o Organism.h Sim.cpp
 Board.o: DoodleBug.o Ant.o Board.h Board.cpp
 	g++ $(CFLAGS) -Wall -c Board.cpp
 
-DoodleBug.o: Organism.o DoodleBug.h DoodleBug.cpp
+DoodleBug.o: EmptyBug.o DoodleBug.h DoodleBug.cpp
 	g++ $(CFLAGS) -Wall -c DoodleBug.cpp 
 
-Ant.o: Organism.o Ant.h Ant.cpp
+Ant.o: EmptyBug.o Ant.h Ant.cpp
 	g++ $(CFLAGS) -Wall -c Ant.cpp
 
+EmptyBug.o: Organism.o EmptyBug.h EmptyBug.cpp
+	g++ $(CFLAGS) -Wall -c EmptyBug.cpp
+	
 Organism.o: Organism.h Organism.cpp
 	g++ $(CFLAGS) -Wall -c Organism.cpp
 

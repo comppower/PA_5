@@ -27,8 +27,8 @@ public:
 	static void Init(int ants, int doodleBugs, int xSize, int ySize);
 	static void BoardPrint();
 	//TODO make private again
-	static DoodleBug ***curBoard;
-	static DoodleBug ***nextBoard;
+	static EmptyBug ***curBoard;
+	static EmptyBug ***nextBoard;
 private:
 	Board();
 	~Board();
