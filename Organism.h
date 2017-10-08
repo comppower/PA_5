@@ -20,6 +20,7 @@ public:
 	virtual Location Move() =0;
 	virtual Location Reproduce()=0;
 	virtual bool IsPrey()=0;
+	virtual char GetChar()=0;
 	//this is used to determine if there is
 	//a bug there
 	virtual Location GetLoc()=0;

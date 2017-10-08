@@ -9,6 +9,7 @@
 
 int main(){
 	Board::Init(3, 3, 3, 3);
+	Board::BoardPrint();
 	return 0;
 }
 

@@ -7,50 +7,32 @@
 
 #include "Board.h"
 #include "DoodleBug.h"
+#include "Ant.h"
 #include <stdlib.h>
 #include <iostream>
 
 Organism ***Board::curBoard=NULL;
 Organism ***Board::nextBoard=NULL;
 int Board::rSize=0;
-int Board::ySize=0;
+int Board::cSize=0;
 Dir Board::lookingAt=up;
 void Board::Init(int ants, int doodleBugs, int rSize, int cSize){
 //TODO create an "empty organism" so we can make a pointer to it for the array
 	//board is in terms of r,c or y,x
 	Board::rSize=rSize;
-	Board::ySize=cSize;
-	curBoard= new Organism**[cSize];
-	nextBoard=new Organism**[cSize];
+	Board::cSize=cSize;
+	curBoard= new Organism**[rSize];
+	nextBoard=new Organism**[rSize];
 	for(int i=0; i<cSize; i++){
-		curBoard[i]=new Organism*[rSize];
-		nextBoard[i]=new Organism*[rSize];
+		curBoard[i]=new Organism*[cSize];
+		nextBoard[i]=new Organism*[cSize];
 	}
 	curBoard[2][2]=new DoodleBug(Location{2,2});
-	curBoard[2][1]=new DoodleBug(Location{1,2});
+	curBoard[2][1]=new DoodleBug(Location{2,1});
+	curBoard[1][2]=new Ant(Location{1,2});
 	nextBoard[1][2]=new DoodleBug(Location{1,2});
-	//test section for finding neighbor
-	int count=0;
-	Dir tempdir=down;
 
-	Organism *_temp =GetNeighbor(Location{2,2},tempdir);
-	bool found=false;
-	if(_temp!=0){
-		found = !_temp->IsPrey();
-	}
-	while(!found&&count<3){
-		_temp = GetNextNeighbor(curBoard[2][2]->GetLoc());
-		if(_temp!=0){
-			found=!_temp->IsPrey();
-		}
-		count++;
-	}
-	if(_temp!=0){
-		std::cout<<_temp->GetLoc().c<<" "<<lookingAt<<std::endl;
-	}
-	else{
-		std::cout<<"outta luck"<<std::endl;
-	}
+
 }
 
 //this starts the search for neighbors around a certain location
@@ -113,4 +95,18 @@ int Board::max(int a, int b){
 		return a;
 	}
 	return b;
+}
+
+void Board::BoardPrint(){
+	for(int i=0; i<rSize;i++){
+		for(int j=0; j<cSize; j++){
+			if(curBoard[i][j]!=0){
+				std::cout<<curBoard[i][j]->GetChar();
+			}
+			else{
+				std::cout<<' ';
+			}
+		}
+		std::cout<<std::endl;
+	}
 }

@@ -17,6 +17,7 @@ public:
 	Location Reproduce();
 	bool IsPrey();
 	Location GetLoc();
+	char GetChar();
 	DoodleBug(Location initLoc);
 	~DoodleBug();
 private:

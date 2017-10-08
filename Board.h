@@ -39,7 +39,7 @@ private:
 	~Board();
 	static Dir lookingAt;
 	static int rSize;
-	static int ySize;
+	static int cSize;
 };
 
 
