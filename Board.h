@@ -33,12 +33,12 @@ public:
 	static Organism ***curBoard;
 	static Organism ***nextBoard;
 private:
-	int min(int a, int b);
-	int max(int a, int b);
+	static int min(int a, int b);
+	static int max(int a, int b);
 	Board();
 	~Board();
 	static Dir lookingAt;
-	static int xSize;
+	static int rSize;
 	static int ySize;
 };
 

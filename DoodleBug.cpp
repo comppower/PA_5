@@ -22,9 +22,6 @@ Location DoodleBug::Move(){
 Location DoodleBug::Reproduce(){
 	return Location{0,0};
 }
-bool DoodleBug::IsEmpty(){
-	return false;
-}
 bool DoodleBug::IsPrey(){
 	return false;
 }

@@ -8,7 +8,7 @@
 #include "Board.h"
 
 int main(){
-	Board::Init(5, 5, 5, 5);
+	Board::Init(3, 3, 3, 3);
 	return 0;
 }
 

@@ -16,7 +16,6 @@ public:
 	Location Move();
 	Location Reproduce();
 	bool IsPrey();
-	bool IsEmpty();
 	Location GetLoc();
 	DoodleBug(Location initLoc);
 	~DoodleBug();

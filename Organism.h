@@ -9,8 +9,8 @@
 #define ORGANISM_H_
 
 struct Location{
-	int x;
-	int y;
+	int r;
+	int c;
 };
 
 class Organism{
@@ -22,7 +22,6 @@ public:
 	virtual bool IsPrey()=0;
 	//this is used to determine if there is
 	//a bug there
-	virtual bool IsEmpty()=0;
 	virtual Location GetLoc()=0;
 	virtual ~Organism(){;}
 protected:
