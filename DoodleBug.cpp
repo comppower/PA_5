@@ -23,9 +23,9 @@ Location DoodleBug::Move(){
 	//tell the grid that this organism has moved
 	moveCount++;
 	//randomize the starting direction
-	Dir dir = (Dir)(rand()%4);
+	//Dir dir = (Dir)(rand()%4);
 	//start the search
-	Organism *_temp =Board::GetNeighbor(this->curLoc,dir);
+	//Organism *_temp =Board::GetNeighbor(this->curLoc,dir);
 
 	/*//you need to make sure it hasn't found itself
 	if(_temp!=0&&_temp!=this){
@@ -35,7 +35,7 @@ Location DoodleBug::Move(){
 		return _temp->GetLoc();
 	}*/
 	//then look for a bite to eat
-	bool found=false;
+	/*bool found=false;
 	int count=0;
 	//check all 4 directions
 	while(!found&&count<4){
@@ -77,7 +77,8 @@ Location DoodleBug::Move(){
 		return Board::GetFromSearchDir(this->curLoc);
 	}
 	//otherwise stay put
-	return this->curLoc;
+	return this->curLoc;*/
+	return Location{0,0};
 }
 void DoodleBug::SetLoc(Location loc){
 	this->curLoc=loc;

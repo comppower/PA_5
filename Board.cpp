@@ -15,7 +15,7 @@ Organism ***Board::curBoard=NULL;
 Organism ***Board::nextBoard=NULL;
 int Board::rSize=0;
 int Board::cSize=0;
-Dir Board::lookingAt=up;
+
 bool operator ==(const Location& a, const Location& b){
 	return(a.r==b.r && a.c==b.c);
 }
@@ -31,9 +31,15 @@ void Board::Init(int ants, int doodleBugs, int rSize, int cSize){
 		nextBoard[i]=new Organism*[cSize];
 	}
 	curBoard[1][0]=new Ant(Location{1,0});
+	curBoard[0][1]=new Ant(Location{0,1});
 	curBoard[1][1]=new DoodleBug(Location{1,1});
-	curBoard[1][2]=new Ant(Location{1,2});
-
+	//curBoard[1][2]=new Ant(Location{1,2});
+	//curBoard[2][1]=new Ant(Location{2,1});
+	LocList test=GetOpen(Location{1,1});
+	for(int i=0; i<test.length;i++){
+		std::cout<<test.Locs[i].r<<", "<<test.Locs[i].c<<std::endl;
+	}
+	BoardPrint();
 
 }
 void Board::Play(){
@@ -72,55 +78,117 @@ void Board::Play(){
 	//print the result
 	BoardPrint();
 }
-//this starts the search for neighbors around a certain location
-//Direction must be randomized first
-Organism *Board::GetNeighbor(Location curLoc, Dir dir){
-	lookingAt=dir;
-	switch(lookingAt){
-	case up:
-		return curBoard[Board::max(0,curLoc.r-1)][curLoc.c];
-		break;
-	case left:
-		return curBoard[curLoc.r][Board::max(0, curLoc.c-1)];
-		break;
-	case down:
-		return curBoard[Board::min(rSize-1,curLoc.r+1)][curLoc.c];
-		break;
-	case right:
-		return curBoard[curLoc.r][Board::min(cSize-1, curLoc.c+1)];
-		break;
+//This generates a LocList for the location of
+//any bois marked as prey
+//make sure to free the loclist when youre done with it
+LocList Board::GetPrey(Location curLoc){
+	int count=0;
+	for (int i = 0; i < NUMDIR; i++) {
+		Organism *_temp = curBoard[Board::max(0, curLoc.r - 1)][curLoc.c];
+		switch ((Dir) i) {
+		case up:
+			_temp = curBoard[Board::max(0, curLoc.r - 1)][curLoc.c];
+			break;
+		case left:
+			_temp = curBoard[curLoc.r][Board::max(0, curLoc.c - 1)];
+			break;
+		case down:
+			_temp = curBoard[Board::min(rSize - 1, curLoc.r + 1)][curLoc.c];
+			break;
+		case right:
+			_temp = curBoard[curLoc.r][Board::min(cSize - 1, curLoc.c + 1)];
+			break;
+		}
+		if(_temp!=0&&_temp->IsPrey()){
+			count++;
+		}
 	}
-	//the case switch covers everything so it shouldn't
-	//get here
-	return curBoard[curLoc.r][curLoc.c];
+
+	LocList locs = LocList{(Location*)malloc(sizeof(Location)*count), count};
+	count=0;
+
+	for (int i = 0; i < NUMDIR; i++) {
+		Organism *_temp = curBoard[Board::max(0, curLoc.r - 1)][curLoc.c];
+		switch ((Dir) i) {
+		case up:
+			_temp = curBoard[Board::max(0, curLoc.r - 1)][curLoc.c];
+			break;
+		case left:
+			_temp = curBoard[curLoc.r][Board::max(0, curLoc.c - 1)];
+			break;
+		case down:
+			_temp = curBoard[Board::min(rSize - 1, curLoc.r + 1)][curLoc.c];
+			break;
+		case right:
+			_temp = curBoard[curLoc.r][Board::min(cSize - 1, curLoc.c + 1)];
+			break;
+		}
+		if(_temp!=0&&_temp->IsPrey()){
+			locs.Locs[count]=_temp->GetLoc();
+			count++;
+		}
+	}
+	return locs;
 }
 
 //this moves the looking location one to the
-Organism *Board::GetNextNeighbor(Location curLoc){
-	lookingAt=(Dir)((int)(lookingAt+1));
-	if(lookingAt>=4){
-		lookingAt=(Dir)0;
+LocList Board::GetOpen(Location curLoc) {
+	int count = 0;
+	for (int i = 0; i < NUMDIR; i++) {
+		Organism *_temp = curBoard[Board::max(0, curLoc.r - 1)][curLoc.c];
+		switch ((Dir) i) {
+		case up:
+			_temp = curBoard[Board::max(0, curLoc.r - 1)][curLoc.c];
+			break;
+		case left:
+			_temp = curBoard[curLoc.r][Board::max(0, curLoc.c - 1)];
+			break;
+		case down:
+			_temp = curBoard[Board::min(rSize - 1, curLoc.r + 1)][curLoc.c];
+			break;
+		case right:
+			_temp = curBoard[curLoc.r][Board::min(cSize - 1, curLoc.c + 1)];
+			break;
+		}
+		if (_temp==0) {
+			count++;
+		}
 	}
-	switch(lookingAt){
-	case up:
-		return curBoard[Board::max(0,curLoc.r-1)][curLoc.c];
-		break;
-	case down:
-		return curBoard[Board::min(rSize-1,curLoc.r+1)][curLoc.c];
-		break;
-	case left:
-		return curBoard[curLoc.r][Board::max(0, curLoc.c-1)];
-		break;
-	case right:
-		return curBoard[curLoc.r][Board::min(cSize-1, (curLoc.c)+1)];
-		break;
+
+	LocList locs =
+			LocList { (Location*) malloc(sizeof(Location) * count), count };
+	count = 0;
+
+	for (int i = 0; i < NUMDIR; i++) {
+		Organism *_temp = curBoard[Board::max(0, curLoc.r - 1)][curLoc.c];
+		Location loc={max(0, curLoc.r - 1),curLoc.c};
+		switch ((Dir) i) {
+		case up:
+			_temp = curBoard[Board::max(0, curLoc.r - 1)][curLoc.c];
+			loc={max(0, curLoc.r - 1),curLoc.c};
+			break;
+		case left:
+			_temp = curBoard[curLoc.r][Board::max(0, curLoc.c - 1)];
+			loc={curLoc.r,Board::max(0, curLoc.c - 1)};
+			break;
+		case down:
+			_temp = curBoard[Board::min(rSize - 1, curLoc.r + 1)][curLoc.c];
+			loc={Board::min(rSize - 1, curLoc.r + 1),curLoc.c};
+			break;
+		case right:
+			_temp = curBoard[curLoc.r][Board::min(cSize - 1, curLoc.c + 1)];
+			loc={curLoc.r,Board::min(cSize - 1, curLoc.c + 1)};
+			break;
+		}
+		if (_temp==0) {
+			locs.Locs[count] = loc;
+			count++;
+		}
 	}
-	//the case switch covers everything so it shouldn't
-	//get here
-	return curBoard[curLoc.r][curLoc.c];
+	return locs;
 }
 
-Location Board::GetFromSearchDir(Location curLoc){
+/*Location Board::GetFromSearchDir(Location curLoc){
 	//finds the location of where the board was
 	//checking based on the current direction
 	switch(lookingAt){
@@ -138,7 +206,7 @@ Location Board::GetFromSearchDir(Location curLoc){
 		break;
 	}
 	return curLoc;
-}
+}*/
 //gets the min of two numbers
 int Board::min(int a, int b){
 	if(a<b){
