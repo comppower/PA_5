@@ -19,6 +19,9 @@ public:
 	//the caller must specifify the location
 	//and direction to look, which should be random
 	static Organism *GetNeighbor(Location curLoc, Dir dir);
+	//this continues to increment the search direction
+	//to provide a random area to look
+	static Organism *GetNextNeighbor(Location curLoc);
 	static Organism *GetAt(Location loc);
 	//this will be called by the reproduce method
 	//of any object
@@ -27,12 +30,16 @@ public:
 	static void Init(int ants, int doodleBugs, int xSize, int ySize);
 	static void BoardPrint();
 	//TODO make private again
-	static EmptyBug ***curBoard;
-	static EmptyBug ***nextBoard;
+	static Organism ***curBoard;
+	static Organism ***nextBoard;
 private:
+	int min(int a, int b);
+	int max(int a, int b);
 	Board();
 	~Board();
-	static int turn;
+	static Dir lookingAt;
+	static int xSize;
+	static int ySize;
 };
 
 

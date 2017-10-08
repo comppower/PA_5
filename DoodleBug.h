@@ -8,9 +8,8 @@
 #ifndef DOODLEBUG_H_
 #define DOODLEBUG_H_
 #include "Organism.h"
-#include "EmptyBug.h"
 
-class DoodleBug: public EmptyBug{
+class DoodleBug: public Organism{
 public:
 	//all of these override the vitrual members
 	//from Organism
@@ -18,6 +17,7 @@ public:
 	Location Reproduce();
 	bool IsPrey();
 	bool IsEmpty();
+	Location GetLoc();
 	DoodleBug(Location initLoc);
 	~DoodleBug();
 private:

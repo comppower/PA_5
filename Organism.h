@@ -23,6 +23,7 @@ public:
 	//this is used to determine if there is
 	//a bug there
 	virtual bool IsEmpty()=0;
+	virtual Location GetLoc()=0;
 	virtual ~Organism(){;}
 protected:
 	//the constructor is protected becuase
@@ -30,6 +31,8 @@ protected:
 	//of this type
 	Organism(Location initLoc){;}
 	int moveCount;
+	//this stores whether or not the organism has moved
+	bool hasMoved;
 	//this stores the position
 	//of the organism, to be used to find
 	//position
