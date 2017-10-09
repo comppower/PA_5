@@ -40,6 +40,7 @@ Organism *Ant::Reproduce(){
 		//has the Doodlebug die if it has starved
 		if(lList.length>0){
 			int index=rand()%lList.length;
+			//TODO renable ant breeding
 			//_toMake=new Ant(lList.Locs[index]);
 			delete lList.Locs;
 		}

@@ -49,6 +49,7 @@ void Board::Init(int ants, int doodleBugs, int rSize, int cSize){
 }
 void Board::Play(){
 	//Moves the organisms
+	//TODO make sure ants move last!!
 	for (int r = 0; r < rSize; r++) {
 		for (int c = 0; c < cSize; c++) {
 			Organism *_temp = curBoard[r][c];
