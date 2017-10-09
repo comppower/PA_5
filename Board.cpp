@@ -19,7 +19,7 @@ int Board::numAnts=0;
 bool operator ==(const Location& a, const Location& b){
 	return(a.r==b.r && a.c==b.c);
 }
-void Board::Init(int ants, int doodleBugs, int rSize, int cSize){
+void Board::Init(int doodleBugs, int ants, int rSize, int cSize){
 //TODO create an "empty organism" so we can make a pointer to it for the array
 	//board is in terms of r,c or y,x
 	Board::rSize=rSize;
@@ -158,8 +158,6 @@ void Board::Play(){
 			}
 		}
 	}
-	//print the result
-	BoardPrint();
 }
 //This generates a LocList for the location of
 //any bois marked as prey

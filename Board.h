@@ -38,7 +38,7 @@ public:
 	//this will be called by the reproduce method
 	//of any object
 	//static void CreateAt(Location loc);
-	static void Init(int ants, int doodleBugs, int xSize, int ySize);
+	static void Init(int doodleBugs, int ants, int xSize, int ySize);
 	static void BoardPrint();
 	static int GetNumDoodle();
 	static int GetNumAnts();
