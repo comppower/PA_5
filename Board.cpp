@@ -30,11 +30,12 @@ void Board::Init(int ants, int doodleBugs, int rSize, int cSize){
 		curBoard[i]=new Organism*[cSize];
 		nextBoard[i]=new Organism*[cSize];
 	}
-	curBoard[1][0]=new Ant(Location{1,0});
-	curBoard[0][1]=new Ant(Location{0,1});
+	curBoard[1][0]=new DoodleBug(Location{1,0});
+	curBoard[0][1]=new DoodleBug(Location{0,1});
 	curBoard[1][1]=new DoodleBug(Location{1,1});
-	curBoard[1][2]=new Ant(Location{1,2});
-	curBoard[2][1]=new Ant(Location{2,1});
+	curBoard[0][0]=new DoodleBug(Location{0,0});
+	//curBoard[1][2]=new Ant(Location{1,2});
+	//curBoard[2][1]=new Ant(Location{2,1});
 
 	/*LocList test=GetOpen(Location{1,1});
 	for(int i=0; i<test.length;i++){

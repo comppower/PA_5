@@ -33,7 +33,8 @@ Location DoodleBug::Move(){
 	}
 	turnsSinceEating++;
 	lList=Board::GetOpen(this->curLoc);
-	moveTo = Location{0,0};
+	//this checks if there is an open and
+	//has the Doodlebug die if it has starved
 	if(lList.length>0){
 		if(turnsSinceEating>=toStarve){
 			return Location{-1,-1};
@@ -42,6 +43,11 @@ Location DoodleBug::Move(){
 		moveTo=lList.Locs[index];
 		delete lList.Locs;
 		return moveTo;
+	}
+	//this checks if it is sitting still
+	//and starved
+	if(turnsSinceEating>=toStarve){
+		return Location{-1,-1};
 	}
 	//the -1, -1 says to remove it
 	return this->curLoc;
