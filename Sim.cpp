@@ -10,9 +10,9 @@
 int main(){
 	srand(time(NULL));
 	Board::Init(3, 3, 5, 5);
-	/*for(int i=0; i<2; i++){
+	for(int i=0; i<25; i++){
 		Board::Play();
-	}*/
+	}
 	return 0;
 }
 

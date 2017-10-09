@@ -22,63 +22,29 @@ DoodleBug::DoodleBug(Location initLoc):Organism(initLoc){
 Location DoodleBug::Move(){
 	//tell the grid that this organism has moved
 	moveCount++;
-	//randomize the starting direction
-	//Dir dir = (Dir)(rand()%4);
-	//start the search
-	//Organism *_temp =Board::GetNeighbor(this->curLoc,dir);
-
-	/*//you need to make sure it hasn't found itself
-	if(_temp!=0&&_temp!=this){
-		//if it finds prey have it move and reset its eating counter
-		found = _temp->IsPrey();
+	LocList lList=Board::GetPrey(this->curLoc);
+	Location moveTo = Location{0,0};
+	if(lList.length>0){
 		turnsSinceEating=0;
-		return _temp->GetLoc();
-	}*/
-	//then look for a bite to eat
-	/*bool found=false;
-	int count=0;
-	//check all 4 directions
-	while(!found&&count<4){
-		//you need to make sure it hasn't found itself
-		if(_temp!=0&&_temp!=this){
-			found= _temp->IsPrey();
-			turnsSinceEating=0;
-			return _temp->GetLoc();
+		int index=rand()%lList.length;
+		moveTo=lList.Locs[index];
+		delete lList.Locs;
+		return moveTo;
+	}
+	turnsSinceEating++;
+	lList=Board::GetOpen(this->curLoc);
+	moveTo = Location{0,0};
+	if(lList.length>0){
+		if(turnsSinceEating>=toStarve){
+			return Location{-1,-1};
 		}
-		_temp = Board::GetNextNeighbor(this->curLoc);
-		count++;
+		int index=rand()%lList.length;
+		moveTo=lList.Locs[index];
+		delete lList.Locs;
+		return moveTo;
 	}
-	//then find a blank space
-	dir = (Dir)(rand()%4);
-	//start the search
-	_temp =Board::GetNeighbor(this->curLoc,dir);
-	count=0;
-	if(!found){
-		//obviously it hasn't eaten this turn
-		turnsSinceEating++;
-		//needs to look through all four directions again
-		while(!found&&count<4){
-			_temp = Board::GetNextNeighbor(this->curLoc);
-			if(_temp==0){
-				found=true;
-			}
-			count++;
-		}
-	}
-	//if it hasn't eaten in three turns it returns the location
-	//of death
-	//TODO switch back to 3
-	if(turnsSinceEating==15){
-		return Location{-1, -1};
-	}
-	//if it found a spot and isn't it moves there
-	else if(found){
-		//get the location of the blank space
-		return Board::GetFromSearchDir(this->curLoc);
-	}
-	//otherwise stay put
-	return this->curLoc;*/
-	return Location{0,0};
+	//the -1, -1 says to remove it
+	return this->curLoc;
 }
 void DoodleBug::SetLoc(Location loc){
 	this->curLoc=loc;

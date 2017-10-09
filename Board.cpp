@@ -33,13 +33,14 @@ void Board::Init(int ants, int doodleBugs, int rSize, int cSize){
 	curBoard[1][0]=new Ant(Location{1,0});
 	curBoard[0][1]=new Ant(Location{0,1});
 	curBoard[1][1]=new DoodleBug(Location{1,1});
-	//curBoard[1][2]=new Ant(Location{1,2});
-	//curBoard[2][1]=new Ant(Location{2,1});
-	LocList test=GetOpen(Location{1,1});
+	curBoard[1][2]=new Ant(Location{1,2});
+	curBoard[2][1]=new Ant(Location{2,1});
+
+	/*LocList test=GetOpen(Location{1,1});
 	for(int i=0; i<test.length;i++){
 		std::cout<<test.Locs[i].r<<", "<<test.Locs[i].c<<std::endl;
 	}
-	BoardPrint();
+	BoardPrint();*/
 
 }
 void Board::Play(){
@@ -51,18 +52,24 @@ void Board::Play(){
 				Location moveTo=_temp->Move();
 				Location curLoc=_temp->GetLoc();
 				//if whatever is there is getting eaten, remove it
-				if(curBoard[moveTo.r][moveTo.c]!=0&&!(curLoc==moveTo)){
-					delete curBoard[moveTo.r][moveTo.c];
-				}
-				//move the reference to the move location
-				curBoard[moveTo.r][moveTo.c]=curBoard[curLoc.r][curLoc.c];
-				//reset the original if needed
-				if(!(curLoc==moveTo)){
+				if(moveTo.r==-1){
+					delete _temp;
 					curBoard[curLoc.r][curLoc.c]=0;
 				}
-				//update the location of the organism
-				curBoard[moveTo.r][moveTo.c]->SetLoc(moveTo);
-				_temp->hasMoved = true;
+				else{
+					if(curBoard[moveTo.r][moveTo.c]!=0&&!(curLoc==moveTo)){
+						delete curBoard[moveTo.r][moveTo.c];
+					}
+					//move the reference to the move location
+					curBoard[moveTo.r][moveTo.c]=curBoard[curLoc.r][curLoc.c];
+					//reset the original if needed
+					if(!(curLoc==moveTo)){
+						curBoard[curLoc.r][curLoc.c]=0;
+					}
+					//update the location of the organism
+					curBoard[moveTo.r][moveTo.c]->SetLoc(moveTo);
+					_temp->hasMoved = true;
+				}
 			}
 		}
 	}
