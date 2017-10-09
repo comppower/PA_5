@@ -9,10 +9,12 @@
 
 int main(){
 	srand(time(NULL));
-	Board::Init(3, 3, 2, 2);
-	for(int i=0; i<25; i++){
+	Board::Init(4, 1, 5, 5);
+	for(int i=0; i<15; i++){
 		Board::Play();
 	}
+	std::cout<<Board::GetNumAnts()<<std::endl;
+	std::cout<<Board::GetNumDoodle()<<std::endl;
 	return 0;
 }
 

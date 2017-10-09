@@ -14,7 +14,7 @@ public:
 	//all of these override the vitrual members
 	//from Organism
 	Location Move();
-	Location Reproduce();
+	Organism *Reproduce();
 	bool IsPrey();
 	Location GetLoc();
 	char GetChar();
@@ -23,6 +23,7 @@ public:
 	~DoodleBug();
 private:
 	const int toStarve=3;
+	const int toBreed=8;
 	int turnsSinceEating;
 };
 

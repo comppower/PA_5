@@ -26,7 +26,7 @@ Location DoodleBug::Move(){
 	Location moveTo = Location{0,0};
 	if(lList.length>0){
 		turnsSinceEating=0;
-		int index=rand()%lList.length;
+		int index=rand()%lList.length+1;
 		moveTo=lList.Locs[index];
 		delete lList.Locs;
 		return moveTo;
@@ -55,8 +55,17 @@ Location DoodleBug::Move(){
 void DoodleBug::SetLoc(Location loc){
 	this->curLoc=loc;
 }
-Location DoodleBug::Reproduce(){
-	return Location{0,0};
+Organism *DoodleBug::Reproduce(){
+	Organism *_toMake=NULL;
+	if(moveCount>=toBreed){
+		LocList lList=Board::GetOpen(this->curLoc);
+		if(lList.length>0){
+			int index=rand()%lList.length;
+			_toMake= new DoodleBug(lList.Locs[index]);
+			delete lList.Locs;
+		}
+	}
+	return _toMake;
 }
 bool DoodleBug::IsPrey(){
 	return false;
