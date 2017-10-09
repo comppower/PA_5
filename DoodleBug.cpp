@@ -26,7 +26,7 @@ Location DoodleBug::Move(){
 	Location moveTo = Location{0,0};
 	if(lList.length>0){
 		turnsSinceEating=0;
-		int index=rand()%lList.length+1;
+		int index=rand()%lList.length;
 		moveTo=lList.Locs[index];
 		delete lList.Locs;
 		return moveTo;
