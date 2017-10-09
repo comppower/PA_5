@@ -32,9 +32,12 @@ public:
 	//static Location GetFromSearchDir(Location curLoc);
 	//actually plays a full turn on the board
 	static void Play();
+	//This moves the organism
+	static void MoveOrganism(Organism *_curOrg);
+	static void SpawnOrganism(Organism *_curOrg);
 	//this will be called by the reproduce method
 	//of any object
-	static void CreateAt(Location loc);
+	//static void CreateAt(Location loc);
 	static void Init(int ants, int doodleBugs, int xSize, int ySize);
 	static void BoardPrint();
 	static int GetNumDoodle();

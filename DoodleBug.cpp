@@ -9,7 +9,7 @@
 #include "Organism.h"
 #include "Board.h"
 #include <stdlib.h>
-
+//DoodleBug can't move after being born
 DoodleBug::DoodleBug(Location initLoc):Organism(initLoc){
 	curLoc=initLoc;
 	hasMoved=true;

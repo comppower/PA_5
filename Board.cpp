@@ -47,56 +47,91 @@ void Board::Init(int ants, int doodleBugs, int rSize, int cSize){
 	BoardPrint();*/
 
 }
+void Board::MoveOrganism(Organism *_curOrg) {
+	Location moveTo = _curOrg->Move();
+	Location curLoc = _curOrg->GetLoc();
+	//if whatever is there is getting eaten, remove it
+	if (moveTo.r == -1) {
+		//delete the organism
+		delete _curOrg;
+		curBoard[curLoc.r][curLoc.c] = 0;
+	}
+	else {
+		if (curBoard[moveTo.r][moveTo.c] != 0 && !(curLoc == moveTo)) {
+			//delete whatever is in the target position
+			delete curBoard[moveTo.r][moveTo.c];
+		}
+		//move the reference to the move location
+		curBoard[moveTo.r][moveTo.c] = curBoard[curLoc.r][curLoc.c];
+		//reset the original if needed
+		if (!(curLoc == moveTo)) {
+			curBoard[curLoc.r][curLoc.c] = 0;
+		}
+		//update the location of the organism
+		curBoard[moveTo.r][moveTo.c]->SetLoc(moveTo);
+		_curOrg->hasMoved = true;
+	}
+}
+void Board::SpawnOrganism(Organism *_curOrg) {
+	if (_curOrg != 0) {
+		Organism *_toCreate = _curOrg->Reproduce();
+		if (_toCreate != NULL) {
+			curBoard[_toCreate->GetLoc().r][_toCreate->GetLoc().c] = _toCreate;
+			if (_toCreate->IsPrey()) {
+				numAnts++;
+			} else if (!_toCreate->IsPrey()) {
+				numDoodleBugs++;
+			}
+		}
+	}
+}
 void Board::Play(){
-	//Moves the organisms
-	//TODO make sure ants move last!!
+	//Moves the DoodleBugs
 	for (int r = 0; r < rSize; r++) {
 		for (int c = 0; c < cSize; c++) {
 			Organism *_temp = curBoard[r][c];
-			if (_temp != 0 && !_temp->hasMoved) {
-				Location moveTo=_temp->Move();
-				Location curLoc=_temp->GetLoc();
-				//if whatever is there is getting eaten, remove it
-				if(moveTo.r==-1){
-					delete _temp;
-					curBoard[curLoc.r][curLoc.c]=0;
-				}
-				else{
-					if(curBoard[moveTo.r][moveTo.c]!=0&&!(curLoc==moveTo)){
-						delete curBoard[moveTo.r][moveTo.c];
-					}
-					//move the reference to the move location
-					curBoard[moveTo.r][moveTo.c]=curBoard[curLoc.r][curLoc.c];
-					//reset the original if needed
-					if(!(curLoc==moveTo)){
-						curBoard[curLoc.r][curLoc.c]=0;
-					}
-					//update the location of the organism
-					curBoard[moveTo.r][moveTo.c]->SetLoc(moveTo);
-					_temp->hasMoved = true;
-				}
+			if (_temp != 0 && !_temp->hasMoved&& !(_temp->IsPrey())) {
+				MoveOrganism(_temp);
 			}
 		}
 	}
-	//check for spawns
+	//Spawns the DoodleBugs
 	for (int r = 0; r < rSize; r++) {
 		for (int c = 0; c < cSize; c++) {
-			Organism *_temp= curBoard[r][c];
-			if(_temp != 0){
-				Organism *_toCreate=_temp->Reproduce();
-				if(_toCreate != NULL){
-					curBoard[_toCreate->GetLoc().r][_toCreate->GetLoc().c]
-													=_toCreate;
-					if(_toCreate->IsPrey()){
-						numAnts++;
-					}
-					else if(!_toCreate->IsPrey()){
-						numDoodleBugs++;
-					}
-				}
+			Organism *_temp = curBoard[r][c];
+			if (_temp != 0 && !(_temp->IsPrey())) {
+				SpawnOrganism(_temp);
 			}
 		}
 	}
+	//Moves the Ants
+	for (int r = 0; r < rSize; r++) {
+		for (int c = 0; c < cSize; c++) {
+			Organism *_temp = curBoard[r][c];
+			if (_temp != 0 && !_temp->hasMoved&& _temp->IsPrey()){
+				MoveOrganism(_temp);
+			}
+		}
+	}
+	//Spawns the Ants
+	for (int r = 0; r < rSize; r++) {
+		for (int c = 0; c < cSize; c++) {
+			Organism *_temp = curBoard[r][c];
+			if (_temp != 0 && _temp->IsPrey()){
+				SpawnOrganism(_temp);
+			}
+		}
+	}
+	/*if (_temp != 0 && !_temp->hasMoved && (_temp->IsPrey())) {
+		MoveOrganism(_temp);
+	}*/
+	//check for spawns
+	/*for (int r = 0; r < rSize; r++) {
+		for (int c = 0; c < cSize; c++) {
+			Organism *_temp= curBoard[r][c];
+			SpawnOrganism(_temp);
+		}
+	}*/
 	//resets the hasMoved
 	for (int r = 0; r < rSize; r++) {
 		for (int c = 0; c < cSize; c++) {
