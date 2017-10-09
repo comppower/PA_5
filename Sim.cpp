@@ -9,8 +9,8 @@
 
 int main(){
 	srand(time(NULL));
-	Board::Init(4, 1, 5, 5);
-	for(int i=0; i<15; i++){
+	Board::Init(100, 5, 20, 20);
+	for(int i=0; i<1000; i++){
 		Board::Play();
 	}
 	std::cout<<Board::GetNumAnts()<<std::endl;

@@ -43,10 +43,9 @@ public:
 	static int GetNumDoodle();
 	static int GetNumAnts();
 	//TODO make private again
-	static Organism ***curBoard;
-	static Organism ***nextBoard;
 	static const int NUMDIR=4;
 private:
+	static Organism ***curBoard;
 	static int min(int a, int b);
 	static int max(int a, int b);
 	Board();
