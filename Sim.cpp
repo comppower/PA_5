@@ -27,7 +27,7 @@ int main(int argc, char *argv[]){
 		}
 	}
 	int pauseVal=0;
-	int steps=0;
+	int steps=1000;
 	switch(argc){
 	case 1:
 		std::cout<<"Running with default args"<<std::endl;
@@ -102,10 +102,12 @@ int main(int argc, char *argv[]){
 	int count=0;
 	std::string temp;
 	//ouput the initial setup
-	Board::BoardPrint();
-	std::cout<<"num steps "<<count<<std::endl;
-	std::cout<<"hit any key to continue"<<std::endl;
-	std::cin>>temp;
+	if(pauseVal>0){
+		Board::BoardPrint();
+		std::cout<<"num steps "<<count<<std::endl;
+		std::cout<<"enter any character to continue"<<std::endl;
+		std::cin>>temp;
+	}
 	//keep printing
 	for(int i=0; i<steps; i++){
 		Board::Play();
@@ -121,8 +123,11 @@ int main(int argc, char *argv[]){
 	}
 	//give it that last output
 	Board::BoardPrint();
-	std::cout<<Board::GetNumAnts()<<std::endl;
-	std::cout<<Board::GetNumDoodle()<<std::endl;
+	std::cout<<"Steps ran "<<steps<<std::endl;
+	std::cout<<"Final Doodlebug count "<<Board::GetFinalDoodle()<<std::endl;
+	std::cout<<"Final Ant count "<<Board::GetFinalAnts()<<std::endl;
+	std::cout<<"Total Ants made "<<Board::GetTotalAnts()<<std::endl;
+	std::cout<<"Total Doodlebugs made "<<Board::GetTotalDoodle()<<std::endl;
 	//call it a day
 	return 0;
 }

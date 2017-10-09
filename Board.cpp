@@ -14,8 +14,10 @@
 Organism ***Board::curBoard=NULL;
 int Board::rSize=0;
 int Board::cSize=0;
-int Board::numDoodleBugs=0;
-int Board::numAnts=0;
+int Board::totalDoodleBugs=0;
+int Board::finalDoodleBugs=0;
+int Board::totalAnts=0;
+int Board::finalAnts=0;
 bool operator ==(const Location& a, const Location& b){
 	return(a.r==b.r && a.c==b.c);
 }
@@ -24,8 +26,8 @@ void Board::Init(int doodleBugs, int ants, int rSize, int cSize){
 	//board is in terms of r,c or y,x
 	Board::rSize=rSize;
 	Board::cSize=cSize;
-	numAnts=ants;
-	numDoodleBugs=doodleBugs;
+	totalAnts=finalAnts=ants;
+	totalDoodleBugs=finalDoodleBugs=doodleBugs;
 	curBoard= new Organism**[rSize];
 	for(int i=0; i<cSize; i++){
 		curBoard[i]=new Organism*[cSize];
@@ -69,12 +71,25 @@ void Board::MoveOrganism(Organism *_curOrg) {
 	Location curLoc = _curOrg->GetLoc();
 	//if whatever is there is getting eaten, remove it
 	if (moveTo.r == -1) {
-		//delete the organism
+		//adjust final counts
+		if(!_curOrg->IsPrey()){
+			finalDoodleBugs--;
+		}
+		else{
+			finalAnts--;
+		}
 		delete _curOrg;
 		curBoard[curLoc.r][curLoc.c] = 0;
 	}
 	else {
 		if (curBoard[moveTo.r][moveTo.c] != 0 && !(curLoc == moveTo)) {
+			//adjust final counts
+			if (curBoard[moveTo.r][moveTo.c]->IsPrey()) {
+				finalAnts--;
+			}
+			else {
+				finalDoodleBugs--;
+			}
 			//delete whatever is in the target position
 			delete curBoard[moveTo.r][moveTo.c];
 		}
@@ -95,9 +110,11 @@ void Board::SpawnOrganism(Organism *_curOrg) {
 		if (_toCreate != NULL) {
 			curBoard[_toCreate->GetLoc().r][_toCreate->GetLoc().c] = _toCreate;
 			if (_toCreate->IsPrey()) {
-				numAnts++;
+				totalAnts++;
+				finalAnts++;
 			} else if (!_toCreate->IsPrey()) {
-				numDoodleBugs++;
+				totalDoodleBugs++;
+				finalDoodleBugs++;
 			}
 		}
 	}
@@ -299,12 +316,18 @@ void Board::BoardPrint(){
 	std::cout<<"--------------"<<std::endl;
 }
 
-int Board::GetNumDoodle(){
-	return numDoodleBugs;
+int Board::GetTotalDoodle(){
+	return totalDoodleBugs;
 }
 
-int Board::GetNumAnts(){
-	return numAnts;
+int Board::GetTotalAnts(){
+	return totalAnts;
+}
+int Board::GetFinalAnts(){
+	return finalAnts;
+}
+int Board::GetFinalDoodle(){
+	return finalDoodleBugs;
 }
 
 /*Location Board::GetFromSearchDir(Location curLoc){

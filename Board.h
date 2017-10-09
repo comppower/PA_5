@@ -40,8 +40,10 @@ public:
 	//static void CreateAt(Location loc);
 	static void Init(int doodleBugs, int ants, int xSize, int ySize);
 	static void BoardPrint();
-	static int GetNumDoodle();
-	static int GetNumAnts();
+	static int GetTotalDoodle();
+	static int GetTotalAnts();
+	static int GetFinalDoodle();
+	static int GetFinalAnts();
 	//TODO make private again
 	static const int NUMDIR=4;
 private:
@@ -52,8 +54,8 @@ private:
 	~Board();
 	static int rSize;
 	static int cSize;
-	static int numDoodleBugs;
-	static int numAnts;
+	static int totalDoodleBugs, finalDoodleBugs;
+	static int totalAnts, finalAnts;
 	//one higher than the actual no.
 	//to ensure all directions can be
 	//generated
