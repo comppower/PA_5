@@ -70,11 +70,14 @@ int main(int argc, char *argv[]){
 		return -1;
 		break;
 	}
+	int count=0;
 	for(int i=0; i<steps; i++){
 		Board::Play();
 		if(pauseVal>0){
 			if(i%pauseVal==0){
 				Board::BoardPrint();
+				count+=5;
+				std::cout<<"num steps "<<count<<std::endl;
 			}
 		}
 	}
