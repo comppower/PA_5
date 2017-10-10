@@ -44,7 +44,6 @@ public:
 	static int GetTotalAnts();
 	static int GetFinalDoodle();
 	static int GetFinalAnts();
-	//TODO make private again
 	static const int NUMDIR=4;
 private:
 	static Organism ***curBoard;

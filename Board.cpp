@@ -18,11 +18,26 @@ int Board::totalDoodleBugs=0;
 int Board::finalDoodleBugs=0;
 int Board::totalAnts=0;
 int Board::finalAnts=0;
+/**
+ * This overloads the equivalence check operator for
+ * the location structs
+ * @param a the first location value to check
+ * @param b the location being compared against a
+ * @returns true if they have the same values
+ */
 bool operator ==(const Location& a, const Location& b){
 	return(a.r==b.r && a.c==b.c);
 }
+/**
+ * This sets up the board based on the values returned from the command
+ * line
+ * @param doodleBugs the number of Doodlebugs to create at the beginning
+ * @param ants the number of ants to create at the start
+ * @param rSize the size of the rows
+ * @param cSize the size of the columns
+ *
+ */
 void Board::Init(int doodleBugs, int ants, int rSize, int cSize){
-//TODO create an "empty organism" so we can make a pointer to it for the array
 	//board is in terms of r,c or y,x
 	Board::rSize=rSize;
 	Board::cSize=cSize;
@@ -52,20 +67,12 @@ void Board::Init(int doodleBugs, int ants, int rSize, int cSize){
 			}
 		}
 	}
-	/*curBoard[1][0]=new Ant(Location{1,0});
-	curBoard[1][1]=new DoodleBug(Location{1,1});
-	//curBoard[1][1]=new Ant(Location{1,1});
-	curBoard[0][1]=new Ant(Location{0,1});
-	curBoard[1][2]=new Ant(Location{1,2});
-	curBoard[2][1]=new Ant(Location{2,1});*/
-
-	/*LocList test=GetOpen(Location{1,1});
-	for(int i=0; i<test.length;i++){
-		std::cout<<test.Locs[i].r<<", "<<test.Locs[i].c<<std::endl;
-	}
-	BoardPrint();*/
-
 }
+/**
+ * This moves the specified organism on the board based
+ * on the type
+ * @param _curOrg the organism to move
+ */
 void Board::MoveOrganism(Organism *_curOrg) {
 	Location moveTo = _curOrg->Move();
 	Location curLoc = _curOrg->GetLoc();
@@ -104,6 +111,10 @@ void Board::MoveOrganism(Organism *_curOrg) {
 		_curOrg->hasMoved = true;
 	}
 }
+/**
+ * This moves the specified organism on the board based
+ * @param _curOrg the organism to spawn
+ */
 void Board::SpawnOrganism(Organism *_curOrg) {
 	if (_curOrg != 0) {
 		Organism *_toCreate = _curOrg->Reproduce();
@@ -119,6 +130,9 @@ void Board::SpawnOrganism(Organism *_curOrg) {
 		}
 	}
 }
+/**
+ * This is where the Organisms are moved and spawn
+ */
 void Board::Play(){
 	//Moves the DoodleBugs
 	for (int r = 0; r < rSize; r++) {
@@ -156,16 +170,6 @@ void Board::Play(){
 			}
 		}
 	}
-	/*if (_temp != 0 && !_temp->hasMoved && (_temp->IsPrey())) {
-		MoveOrganism(_temp);
-	}*/
-	//check for spawns
-	/*for (int r = 0; r < rSize; r++) {
-		for (int c = 0; c < cSize; c++) {
-			Organism *_temp= curBoard[r][c];
-			SpawnOrganism(_temp);
-		}
-	}*/
 	//resets the hasMoved
 	for (int r = 0; r < rSize; r++) {
 		for (int c = 0; c < cSize; c++) {
@@ -176,9 +180,12 @@ void Board::Play(){
 		}
 	}
 }
-//This generates a LocList for the location of
-//any bois marked as prey
-//make sure to free the loclist when youre done with it
+/**This generates a LocList for the location of
+ * any things marked as prey
+ * make sure to free the loclist when you're done with it
+ * @param curLoc the location of the caller
+ * @returns The list of locations with prey
+ */
 LocList Board::GetPrey(Location curLoc){
 	int count=0;
 	for (int i = 0; i < NUMDIR; i++) {
@@ -229,7 +236,12 @@ LocList Board::GetPrey(Location curLoc){
 	return locs;
 }
 
-//this moves the looking location one to the
+/**This generates a LocList for the location of
+ * any open spot
+ * make sure to free the loclist when you're done with it
+ * @param curLoc the location of the caller
+ * @returns The list of locations with prey
+ */
 LocList Board::GetOpen(Location curLoc) {
 	//init count
 	int count = 0;
@@ -286,21 +298,33 @@ LocList Board::GetOpen(Location curLoc) {
 	}
 	return locs;
 }
-
+/**
+ * finds minimum of 2 numbers
+ * @param a the first number
+ * @param b the second number
+ * @returns the max of the numbers
+ */
 int Board::min(int a, int b){
 	if(a<b){
 		return a;
 	}
 	return b;
 }
-//gets the max of two numbers
+/**
+ * finds maximum of 2 numbers
+ * @param a the first number
+ * @param b the second number
+ * @returns the min of the numbers
+ */
 int Board::max(int a, int b){
 	if(a>b){
 		return a;
 	}
 	return b;
 }
-
+/**
+ * Prints the board
+ */
 void Board::BoardPrint(){
 	for(int i=0; i<rSize;i++){
 		for(int j=0; j<cSize; j++){
@@ -315,38 +339,29 @@ void Board::BoardPrint(){
 	}
 	std::cout<<"--------------"<<std::endl;
 }
-
+/**
+ * @returns the total no of Doodlebugs created
+ */
 int Board::GetTotalDoodle(){
 	return totalDoodleBugs;
 }
-
+/**
+ * @returns the total number of ants made
+ */
 int Board::GetTotalAnts(){
 	return totalAnts;
 }
+/**
+ * @returns the final number of ants made
+ */
 int Board::GetFinalAnts(){
 	return finalAnts;
 }
+/**
+ * @returns the final number of Doodlebugs made
+ */
 int Board::GetFinalDoodle(){
 	return finalDoodleBugs;
 }
 
-/*Location Board::GetFromSearchDir(Location curLoc){
-	//finds the location of where the board was
-	//checking based on the current direction
-	switch(lookingAt){
-	case up:
-		return Location{max(0,curLoc.r-1),curLoc.c};
-		break;
-	case down:
-		return Location{min(rSize-1,curLoc.r+1),curLoc.c};
-		break;
-	case left:
-		return Location{curLoc.r, max(0, curLoc.c-1)};
-		break;
-	case right:
-		return Location{curLoc.r, min(cSize-1, curLoc.c+1)};
-		break;
-	}
-	return curLoc;
-}*/
-//gets the min of two numbers
+

@@ -10,15 +10,22 @@
 #include "Board.h"
 #include <stdlib.h>
 //DoodleBug can't move after being born
+/**
+ * initializes the DoodleBug and calls the super constructor
+ * @param initLoc the location to create the organism
+ */
 DoodleBug::DoodleBug(Location initLoc):Organism(initLoc){
 	curLoc=initLoc;
 	hasMoved=true;
 	moveCount=0;
 	turnsSinceEating=0;
 }
-//this info is pulled by the program to move it on the
-//board, and then sets the curLoc
-//to the location returned
+/**
+ * The DoodleBug looks for a location where it can eat
+ * an ant and moves there if possible. Otherwise it looks
+ * for an open spot
+ * @return the location to move to
+ */
 Location DoodleBug::Move(){
 	//tell the grid that this organism has moved
 	moveCount++;
@@ -52,14 +59,24 @@ Location DoodleBug::Move(){
 	//the -1, -1 says to remove it
 	return this->curLoc;
 }
+/*
+ * Sets the location of the Doodlebug
+ * @param loc the location to set
+ */
 void DoodleBug::SetLoc(Location loc){
 	this->curLoc=loc;
 }
+/**
+ * Creates an offspring where there is space
+ * and when it has moved enough spaces
+ * @return the organism to create
+ */
 Organism *DoodleBug::Reproduce(){
 	Organism *_toMake=NULL;
 	if(moveCount>=toBreed){
 		LocList lList=Board::GetOpen(this->curLoc);
 		if(lList.length>0){
+			moveCount=0;
 			int index=rand()%lList.length;
 			_toMake= new DoodleBug(lList.Locs[index]);
 			delete lList.Locs;
@@ -67,12 +84,21 @@ Organism *DoodleBug::Reproduce(){
 	}
 	return _toMake;
 }
+/**
+ * @return false for DoodleBug
+ */
 bool DoodleBug::IsPrey(){
 	return false;
 }
+/**
+ * @return location of DoodleBug
+ */
 Location DoodleBug::GetLoc(){
 	return curLoc;
 }
+/**
+ * @return 'x' for DoodleBug
+ */
 char DoodleBug::GetChar(){
 	return 'x';
 }
@@ -80,26 +106,3 @@ DoodleBug::~DoodleBug(){
 
 }
 
-/*test section for finding neighbor
-Organism *_temp =GetNeighbor(Location{2,2},lookingAt);
-bool found=false;
-//you need to make sure it hasn't found itself
-if(_temp!=0&&_temp!=curBoard[2][2]){
-	found = !_temp->IsPrey();
-}
-int count=0;
-while(!found&&count<3){
-	_temp = GetNextNeighbor(curBoard[2][2]->GetLoc());
-	//you need to make sure it hasn't found itself
-	if(_temp!=0&&_temp!=curBoard[2][2]){
-		found=!_temp->IsPrey();
-	}
-	count++;
-}
-if(_temp!=0){
-	std::cout<<_temp->GetLoc().r<<_temp->GetLoc().c<<" "<<lookingAt<<std::endl;
-}
-else{
-	std::cout<<"outta luck"<<std::endl;
-}
-//end test section*/

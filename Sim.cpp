@@ -8,7 +8,10 @@
 #include <stdlib.h>
 #include "Board.h"
 #include <string>
-
+/**
+ * @return true if there is enough space in the board for every
+ * organism to be created
+ */
 bool isValid(int doodle, int ants, int boardSize){
 	if(boardSize*boardSize<(doodle+ants)){
 		std::cout<<"Board to small for no. creatures specified"<<std::endl;
@@ -33,43 +36,42 @@ int main(int argc, char *argv[]){
 		std::cout<<"Running with default args"<<std::endl;
 		std::cout<<std::endl;
 		std::cout<<"-------------"<<std::endl;
-		Board::Init(5,100,20, 20);
 		srand(1);
+		Board::Init(5,100,20, 20);
 		break;
 	case 2:
 		if(!isValid(5, 100, atoi(argv[1]))){
 			return -1;
 		}
-		Board::Init(5,100, atoi(argv[1]), atoi(argv[1]));
 		srand(1);
+		Board::Init(5,100, atoi(argv[1]), atoi(argv[1]));
 		break;
 	case 3:
 		if(!isValid(atoi(argv[2]), 100, atoi(argv[1]))){
 			return -1;
 		}
-		Board::Init(atoi(argv[2]),100, atoi(argv[1]), atoi(argv[1]));
 		srand(1);
+		Board::Init(atoi(argv[2]),100, atoi(argv[1]), atoi(argv[1]));
 		break;
 	case 4:
 		if(!isValid(atoi(argv[2]), atoi(argv[3]), atoi(argv[1]))){
 			return -1;
 		}
-		Board::Init(atoi(argv[2]),atoi(argv[3]), atoi(argv[1]), atoi(argv[1]));
 		srand(1);
+		Board::Init(atoi(argv[2]),atoi(argv[3]), atoi(argv[1]), atoi(argv[1]));
 		break;
 	case 5:
 		if(!isValid(atoi(argv[2]), atoi(argv[3]), atoi(argv[1]))){
 			return -1;
 		}
-		Board::Init(atoi(argv[2]),atoi(argv[3]), atoi(argv[1]), atoi(argv[1]));
 		steps=atoi(argv[4]);
 		srand(1);
+		Board::Init(atoi(argv[2]),atoi(argv[3]), atoi(argv[1]), atoi(argv[1]));
 		break;
 	case 6:
 		if(!isValid(atoi(argv[2]), atoi(argv[3]), atoi(argv[1]))){
 			return -1;
 		}
-		Board::Init(atoi(argv[2]),atoi(argv[3]), atoi(argv[1]), atoi(argv[1]));
 		steps=atoi(argv[4]);
 		if(argv[5]==0){
 			srand(time(NULL));
@@ -77,20 +79,21 @@ int main(int argc, char *argv[]){
 		else{
 			srand(atoi(argv[5]));
 		}
+		Board::Init(atoi(argv[2]),atoi(argv[3]), atoi(argv[1]), atoi(argv[1]));
 		break;
 		//it will ignore anything 0 or below
 	case 7:
 		if(!isValid(atoi(argv[2]), atoi(argv[3]), atoi(argv[1]))){
 			return -1;
 		}
-		Board::Init(atoi(argv[2]),atoi(argv[3]), atoi(argv[1]), atoi(argv[1]));
 		steps=atoi(argv[4]);
-		if(argv[5]==0){
+		if(atoi(argv[5])==0){
 			srand(time(NULL));
 		}
 		else{
 			srand(atoi(argv[5]));
 		}
+		Board::Init(atoi(argv[2]),atoi(argv[3]), atoi(argv[1]), atoi(argv[1]));
 		pauseVal=atoi(argv[6]);
 		break;
 	default:
@@ -104,12 +107,13 @@ int main(int argc, char *argv[]){
 	//ouput the initial setup
 	if(pauseVal>0){
 		Board::BoardPrint();
+		Board::Play();
 		std::cout<<"num steps "<<count<<std::endl;
 		std::cout<<"enter any character to continue"<<std::endl;
 		std::cin>>temp;
 	}
 	//keep printing
-	for(int i=0; i<steps; i++){
+	for(int i=1; i<steps; i++){
 		Board::Play();
 		if(pauseVal>0){
 			if(i%pauseVal==0){
