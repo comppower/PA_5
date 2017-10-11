@@ -4,6 +4,9 @@
  *  Created on: Oct 8, 2017
  *      Author: klibby
  */
+/**
+ * This contains the main method for the project
+ */
 #include <iostream>
 #include <stdlib.h>
 #include "Board.h"

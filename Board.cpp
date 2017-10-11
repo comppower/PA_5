@@ -184,7 +184,7 @@ void Board::Play(){
  * any things marked as prey
  * make sure to free the loclist when you're done with it
  * @param curLoc the location of the caller
- * @returns The list of locations with prey
+ * @return The list of locations with prey
  */
 LocList Board::GetPrey(Location curLoc){
 	int count=0;
@@ -240,7 +240,7 @@ LocList Board::GetPrey(Location curLoc){
  * any open spot
  * make sure to free the loclist when you're done with it
  * @param curLoc the location of the caller
- * @returns The list of locations with prey
+ * @return The list of locations with prey
  */
 LocList Board::GetOpen(Location curLoc) {
 	//init count
@@ -340,19 +340,19 @@ void Board::BoardPrint(){
 	std::cout<<"--------------"<<std::endl;
 }
 /**
- * @returns the total no of Doodlebugs created
+ * @return the total no of Doodlebugs created
  */
 int Board::GetTotalDoodle(){
 	return totalDoodleBugs;
 }
 /**
- * @returns the total number of ants made
+ * @return the total number of ants made
  */
 int Board::GetTotalAnts(){
 	return totalAnts;
 }
 /**
- * @returns the final number of ants made
+ * @return the final number of ants made
  */
 int Board::GetFinalAnts(){
 	return finalAnts;

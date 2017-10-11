@@ -5,10 +5,10 @@
 
 CFLAGS = -g
 
-all: Sim docs
+all: PA5 docs
 
-Sim: Sim.o Organism.o
-	g++ $(CFLAGS) -Wall Ant.o DoodleBug.o Board.o Sim.o Organism.o -o Sim 
+PA5: Sim.o Organism.o
+	g++ $(CFLAGS) -Wall Ant.o DoodleBug.o Board.o Sim.o Organism.o -o PA5 
 
 Sim.o: Board.o Organism.h Sim.cpp
 	g++ $(CFLAGS) -Wall -c Sim.cpp
@@ -26,7 +26,7 @@ Organism.o: Organism.h Organism.cpp
 	g++ $(CFLAGS) -Wall -c Organism.cpp
 
 clean:
-	rm -rf *.o Sim
+	rm -rf *.o PA5
 	rm -rf ./latex ./html
 
 docs:
